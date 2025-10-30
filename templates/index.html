@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025年につくったもの</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⏲%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E😎%3C/text%3E%3C/svg%3E"
+        type="image/svg+xml">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,6 +19,7 @@
             align-items: center;
             min-height: 100vh;
         }
+
         .container {
             display: flex;
             width: 100%;
@@ -24,6 +28,7 @@
             gap: 20px;
             padding: 20px;
         }
+
         .main-content {
             flex: 1;
             background-color: #fff;
@@ -31,6 +36,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .sidebar {
             width: 250px;
             padding: 20px;
@@ -39,11 +45,13 @@
             height: fit-content;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
             color: #333;
             margin-bottom: 20px;
         }
+
         .date-header {
             font-size: 1.3em;
             font-weight: bold;
@@ -53,6 +61,7 @@
             padding: 8px;
             border-bottom: 1px solid #ddd;
         }
+
         .work-card {
             background: #fff;
             border: 1px solid #ddd;
@@ -64,26 +73,32 @@
             gap: 15px;
             transition: background-color 0.2s;
         }
+
         .work-card:hover {
             background-color: #fafafa;
         }
+
         .work-content {
             flex: 1;
         }
+
         .work-title {
             margin: 0 0 8px 0;
             color: #0066cc;
             font-size: 1.2em;
             cursor: pointer;
         }
+
         .work-title:hover {
             text-decoration: underline;
         }
+
         .work-description {
             margin: 0;
             color: #555;
             line-height: 1.5;
         }
+
         .work-screenshot {
             width: 200px;
             height: auto;
@@ -91,19 +106,23 @@
             object-fit: cover;
             cursor: pointer;
         }
+
         .sidebar h3 {
             font-size: 1.1em;
             margin-bottom: 15px;
             color: #333;
         }
+
         .sidebar ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+
         .sidebar li {
             margin-bottom: 8px;
         }
+
         .sidebar a {
             color: #333;
             text-decoration: none;
@@ -112,43 +131,210 @@
             border-radius: 4px;
             transition: background-color 0.2s;
         }
+
         .sidebar a:hover {
             background: #e0e0e0;
         }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 0.9em;
+            margin: 2px 4px 2px 0;
+            cursor: pointer;
+            transition: filter 0.15s;
+            border: none;
+            display: inline-block;
+        }
+
+        .tag:hover,
+        .tag.selected {
+            filter: brightness(0.93) contrast(1.03);
+            box-shadow: 0 1px 3px #ccc;
+        }
+
+        .filter-reset-btn {
+            margin: 8px 0 0 0;
+            padding: 5px 13px;
+            border-radius: 16px;
+            border: none;
+            background: #ececec;
+            color: #444;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .filter-reset-btn:hover {
+            background: #ffe2c7;
+            color: #a35900;
+        }
+
+        /* --- Mobile (<=768px) --- */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 14px;
+            }
+
+            .main-content {
+                padding: 14px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+                margin: 14px 0;
+            }
+
+            .date-header {
+                font-size: 1.05em;
+                margin: 18px 0 12px 0;
+                padding: 6px;
+            }
+
+            .work-card {
+                flex-direction: column;
+                gap: 10px;
+                padding: 12px;
+            }
+
+            .work-title {
+                font-size: 1.05em;
+            }
+
+            .work-description {
+                font-size: 0.95em;
+            }
+
+            .work-screenshot {
+                width: 100%;
+                height: auto;
+                max-height: none;
+            }
+
+            .tag {
+                font-size: 0.85em;
+                padding: 3px 9px;
+            }
+
+            .sidebar h3 {
+                margin: 10px 0;
+            }
+        }
     </style>
 </head>
+
 <body>
     <h1>2025年につくったもの</h1>
     <div class="container">
         <div class="main-content">
             {% for month, days in yearly_calendar.items() %}
-                <div id="month-{{ month }}"></div>
-                {% for day in days %}
-                    <h2 class="date-header">{{ month }}月{{ day.date.day }}日</h2>
-                    {% for event in day.events %}
-                    <a href="{{ event.location }}" target="_blank" class="work-link" style="text-decoration: none; color: inherit;">
-                        <div class="work-card">
-                            <div class="work-content">
-                                <h3 class="work-title">{{ event.summary }}</h3>
-                                <p class="work-description">{{ event.description }}</p>
-                            </div>
-                            <img class="work-screenshot" src="https://rdl.ink/render/{{ event.location }}" alt="{{ event.summary }}のスクリーンショット">
+            <div id="month-{{ month }}"></div>
+            {% for day in days %}
+            <h2 class="date-header">{{ month }}月{{ day.date.day }}日</h2>
+            {% for event in day.events %}
+            <a href="{{ event.location }}" target="_blank" class="work-link work-entry"
+                style="text-decoration: none; color: inherit;" data-tags="{{ event.tags|join(',') }}">
+                <div class="work-card">
+                    <div class="work-content">
+                        <h3 class="work-title">{{ event.summary }}</h3>
+                        <p class="work-description">{{ event.description }}</p>
+                        {% if event.tags %}
+                        <div class="work-tags tag-list" style="margin-top:6px;">
+                            {% for t in event.tags %}
+                            <span class="tag" data-tag="{{ t }}" style="{{ tag_styles.get(t, '') }}">#{{ t }}</span>
+                            {% endfor %}
                         </div>
-                    </a>
-                    {% endfor %}
-                {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% if event.screenshot_url %}
+                    <img class="work-screenshot" src="{{ event.screenshot_url }}" alt="{{ event.summary }}のスクリーンショット">
+                    {% else %}
+                    <img class="work-screenshot" src="https://rdl.ink/render/{{ event.location }}"
+                        alt="{{ event.summary }}のスクリーンショット">
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
+            {% endfor %}
             {% endfor %}
         </div>
         <div class="sidebar">
+            <h3>タグ</h3>
+            <div class="tag-list" id="sidebar-tag-list">
+                {% for tag, count in tags %}
+                <span class="tag" data-tag="{{ tag }}" style="{{ tag_styles.get(tag, '') }}">#{{ tag }} <small>({{ count
+                        }})</small></span>
+                {% endfor %}
+            </div>
+            <button class="filter-reset-btn" id="reset-btn" style="display:none">フィルターを解除</button>
+            <hr />
             <h3>月別作品数</h3>
             <ul>
-                {% for month, days in yearly_calendar.items() %}
+                {% for month, cnt in monthly_counts.items() %}
                 <li>
-                    <a href="#month-{{ month }}">{{ month }}月 ({{ days | length }}作品)</a>
+                    <a href="#month-{{ month }}">{{ month }}月 ({{ cnt }}個)</a>
                 </li>
                 {% endfor %}
             </ul>
         </div>
     </div>
+    <script>
+        // タグクリック絞り込み
+        const tags = Array.from(document.querySelectorAll('.tag'));
+        const workEntries = Array.from(document.querySelectorAll('.work-entry'));
+        let activeTag = null;
+
+        function updateDateHeadersVisibility() {
+            const headers = Array.from(document.querySelectorAll('.date-header'));
+            headers.forEach(header => {
+                let hasVisible = false;
+                let el = header.nextElementSibling;
+                while (el && !el.classList.contains('date-header')) {
+                    if (el.classList && el.classList.contains('work-entry')) {
+                        if (el.style.display !== 'none') { hasVisible = true; break; }
+                    }
+                    el = el.nextElementSibling;
+                }
+                header.style.display = hasVisible ? '' : 'none';
+            });
+        }
+
+        function setTagFilter(tag) {
+            activeTag = tag;
+            tags.forEach(tg => tg.classList.toggle('selected', tg.dataset.tag === tag));
+            workEntries.forEach(a => {
+                const tagStr = a.getAttribute('data-tags') || '';
+                a.style.display = (tagStr.split(',').map(e => e.trim()).includes(tag)) ? '' : 'none';
+            });
+            document.getElementById('reset-btn').style.display = '';
+            updateDateHeadersVisibility();
+        }
+        function clearTagFilter() {
+            activeTag = null;
+            tags.forEach(tg => tg.classList.remove('selected'));
+            workEntries.forEach(a => a.style.display = '');
+            document.getElementById('reset-btn').style.display = 'none';
+            updateDateHeadersVisibility();
+        }
+        tags.forEach(tg => tg.onclick = (e) => { e.preventDefault(); e.stopPropagation(); setTagFilter(tg.dataset.tag); });
+        document.getElementById('reset-btn').onclick = clearTagFilter;
+
+        // 初期状態で見出しは全て表示されるはずだが、念のため同期
+        updateDateHeadersVisibility();
+    </script>
 </body>
+
 </html>
